@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warehouse & Accounting</title>
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+</head>
+<body>
+<div class="container grid-lg">
+
+  <header class="navbar">
+    <section class="navbar-section">
+      <a href="{{ url_for('index') }}" class="navbar-brand mr-2">Dashboard</a>
+      <a href="{{ url_for('history') }}" class="btn btn-link">History</a>
+    </section>
+  </header>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="toast toast-error mt-2">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="columns mt-2">
+    <div class="column col-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title h5">Current Stock</div>
+        </div>
+        <div class="card-body">
+          <p>{{ stock }} items</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title h5">Account Balance</div>
+        </div>
+        <div class="card-body">
+          <p>€{{ balance }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons to forms -->
+  <div class="columns mt-2">
+    <div class="column col-4"><a href="#purchase-form" class="btn btn-primary btn-block">Purchase</a></div>
+    <div class="column col-4"><a href="#sale-form" class="btn btn-success btn-block">Sale</a></div>
+    <div class="column col-4"><a href="#balance-form" class="btn btn-error btn-block">Change Balance</a></div>
+  </div>
+
+  <!-- PURCHASE FORM -->
+  <div class="container grid-lg mt-4" id="purchase-form">
+    <h4>Purchase</h4>
+    <form action="{{ url_for('purchase') }}" method="POST">
+      <div class="form-group">
+        <label>Product Name</label>
+        <input class="form-input" type="text" name="product" required>
+      </div>
+      <div class="form-group">
+        <label>Unit Price</label>
+        <input class="form-input" type="number" step="0.01" name="price" required>
+      </div>
+      <div class="form-group">
+        <label>Quantity</label>
+        <input class="form-input" type="number" name="quantity" required>
+      </div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- SALE FORM -->
+  <div class="container grid-lg mt-4" id="sale-form">
+    <h4>Sale</h4>
+    <form action="{{ url_for('sale') }}" method="POST">
+      <div class="form-group">
+        <label>Product Name</label>
+        <input class="form-input" type="text" name="product" required>
+      </div>
+      <div class="form-group">
+        <label>Unit Price</label>
+        <input class="form-input" type="number" step="0.01" name="price" required>
+      </div>
+      <div class="form-group">
+        <label>Quantity</label>
+        <input class="form-input" type="number" name="quantity" required>
+      </div>
+      <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- BALANCE CHANGE FORM -->
+  <div class="container grid-lg mt-4" id="balance-form">
+    <h4>Change Balance</h4>
+    <form action="{{ url_for('change_balance') }}" method="POST">
+      <div class="form-group">
+        <label>Operation</label>
+        <select class="form-select" name="operation" required>
+          <option value="add">Add</option>
+          <option value="subtract">Subtract</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Amount</label>
+        <input class="form-input" type="number" step="0.01" name="amount" required>
+      </div>
+      <button class="btn btn-error" type="submit">Submit</button>
+    </form>
+  </div>
+
+</div>
+</body>
+</html>
