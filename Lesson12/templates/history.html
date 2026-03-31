@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History</title>
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+</head>
+<body>
+<div class="container grid-lg mt-2">
+
+  <header class="navbar">
+    <section class="navbar-section">
+      <a href="{{ url_for('index') }}" class="navbar-brand mr-2">Dashboard</a>
+    </section>
+  </header>
+
+  <h3>History</h3>
+
+  <table class="table table-striped mt-2">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Entry</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in history %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ line }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
